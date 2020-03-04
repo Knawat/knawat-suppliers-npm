@@ -144,7 +144,7 @@ class Products extends Request {
    * @param {object} {
    *     limit {number} [ 10 .. 1000 ] characters
    *     page {number} non-empty,
-   *     statu {enum} = open/ issued/ cancelled/ billed/ closed,
+   *     statu {string} = open/ issued/ cancelled/ billed/ closed,
    *     purchaseorderNumber {string}
    *   }
    * @returns
