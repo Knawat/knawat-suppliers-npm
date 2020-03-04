@@ -165,7 +165,7 @@ class Products extends Request {
       purchaseorderNumber
     };
 
-    return this.$fetch('GET', '/orders', { queryParams });
+    return this.$fetch("GET", "/orders", { queryParams });
   }
 
   /**
