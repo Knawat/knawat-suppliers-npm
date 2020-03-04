@@ -192,13 +192,21 @@ sa.getCategories();
 ### getOrders (GET Orders)
 
 ```javascript
+const params = {
+  limit = 20,
+  page = 1,
+  status = null,
+  purchaseorderNumber = null
+}
 sa.getOrders(limit, page);
 ```
 
 | Params  | Type     | Description                                  |
 | ------- | -------- | -------------------------------------------- |
-| `limit` | `Number` | Number of orders to retrieve. `Default: 1`   |
+| `limit` | `Number` | Number of orders to retrieve. `Default: 20`   |
 | `page`  | `Number` | Number of the page to retrieve. `Default: 1` |
+| `status` | `String` | Status of orders to retrieve. `Allowed fields : open, issued, cancelled, billed, closed. Default: null`   |
+| `purchaseorderNumber`  | `String` | Purchase number of the order to retrieve. `Default: null` |
 
 <small>https://knawat-suppliers.restlet.io/#operation_get_order_s_</small>
 
