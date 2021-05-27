@@ -1,20 +1,17 @@
-import request from './request';
+import Request from './request';
 
 /**
  * A Class Library for handling Knawat MarketPlace related Operations.
  *
  * @class WeightRules
  */
-class WeightRules extends request {
+class WeightRules extends Request {
   /**
    * Creates an instance of WeightRules.
    *
-   * @param {object} activeInstance
-   * @memberof WeightRules
    */
-  constructor() {
-    super();
-    this.authentication = 'Basic';
+  constructor(...args) {
+    super('Basic', ...args);
   }
 
   /**
@@ -25,31 +22,20 @@ class WeightRules extends request {
    * @see https://knawat-suppliers.restlet.io/#operation_get_all_weight_rules
    * @memberof WeightRules
    */
-  getWeightRules({
-    limit = 20,
-    page = null,
-    sort = null
-  } = {}) {
-    // Generate url query paramaters
-    let queryParams = {
-      limit,
-      page,
-      sort
-    };
-    Object.entries(queryParams).forEach( o => (o[1] === null ? delete queryParams[o[0]] : 0));
-    return this.$fetch('GET', `/weight_rules`, queryParams);
+  getWeightRules(queryParams = {}) {
+    return this.$fetch('GET', '/weight_rules', { queryParams });
   }
 
   /**
    * Create weight rule
    *
-   * @param {object}  weightRules  { "keyword" : "Shirt", "weight": 5 } 
+   * @param {object}  weightRules  { "keyword" : "Shirt", "weight": 5 }
    * @returns
    * @see https://knawat-suppliers.restlet.io/#operation_create_a_supplier
    * @memberof WeightRules
    */
-  createWeightRule(weightRules) {
-    return this.$fetch('POST', `/weight_rules`, weightRules);
+  createWeightRule(queryParams) {
+    return this.$fetch('POST', '/weight_rules', { queryParams });
   }
 
   /**
@@ -63,7 +49,7 @@ class WeightRules extends request {
    */
   updateWeightRule(id, weightRules) {
     return this.$fetch('PUT', `/weight_rules/${id}`, {
-      body: JSON.stringify({ weightRules })
+      body: JSON.stringify({ weightRules }),
     });
   }
 
@@ -78,7 +64,6 @@ class WeightRules extends request {
   deleteWeightRule(id) {
     return this.$fetch('DELETE', `/weight_rules/${id}`);
   }
-
 }
 
 module.exports = WeightRules;

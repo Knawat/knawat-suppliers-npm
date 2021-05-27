@@ -1,10 +1,11 @@
 {
   "name": "@knawat/suppliers",
-  "version": "1.1.0",
+  "version": "1.4.5",
   "description": "A Node.js package for the Knawat Dropshipping Suppliers REST API",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.js",
   "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "build-o": "SET NODE_ENV=development & node scripts/build",
     "build": "babel ./src --out-dir dist",
@@ -24,9 +25,12 @@
     "@babel/core": "^7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/preset-env": "^7.6.0",
+    "@knawat/types": "^1.1.10",
+    "babel-eslint": "^10.0.3",
     "browser-sync": "^2.26.3",
     "eslint": "^5.15.3",
     "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
     "filesize": "^4.1.2",
     "gzip-size": "^5.0.0",
     "jest": "^24.5.0",
@@ -41,7 +45,8 @@
     "uglify-js": "^3.5.2"
   },
   "dependencies": {
+    "bottleneck": "^2.19.5",
     "node-fetch": "^2.6.0",
-    "querystring": "^0.2.0"
+    "qs": "^6.9.1"
   }
 }

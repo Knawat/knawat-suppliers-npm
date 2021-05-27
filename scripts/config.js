@@ -8,7 +8,7 @@ const version = process.env.VERSION || require('../package.json').version;
 const paths = {
   src: path.join(__dirname, '../src'),
   dist: path.join(__dirname, '../dist'),
-  outputFolder: path.join(__dirname, '../dist')
+  outputFolder: path.join(__dirname, '../dist'),
 };
 
 const common = {
@@ -17,25 +17,25 @@ const common = {
   uglifyOptions: {
     toplevel: true,
     compress: true,
-    mangle: true
+    mangle: true,
   },
   banner: `/**
   * Knawat Suppliers ${version}
   * (c) ${new Date().getFullYear()}
     * @license MIT
     */`,
-  plugins: [babel(), commonjs(), nodeResolve(), builtins()]
+  plugins: [babel(), commonjs(), nodeResolve(), builtins()],
 };
 const builds = {
   umd: {
     format: 'umd',
     name: 'Suppliers',
-    ext: ''
+    ext: '',
   },
   esm: {
     format: 'es',
-    ext: '.esm'
-  }
+    ext: '.esm',
+  },
 };
 
 function getConfig(key) {
@@ -45,7 +45,7 @@ function getConfig(key) {
     input: {
       input: build.input || common.input,
       plugins: build.plugins || common.plugins,
-      external: ['node-fetch', 'querystring']
+      external: ['node-fetch', 'qs'],
     },
     output: {
       name: build.name || common.name,
@@ -53,10 +53,10 @@ function getConfig(key) {
       format: build.format,
       globals: {
         'node-fetch': 'fetch',
-        querystring: 'querystring'
+        qs: 'qs',
       },
-      exports: 'named'
-    }
+      exports: 'named',
+    },
   };
   return config;
 }
@@ -69,5 +69,5 @@ const configs = Object.keys(builds).reduce((acc, build) => {
 module.exports = {
   paths,
   configs,
-  common
+  common,
 };

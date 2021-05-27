@@ -10,11 +10,14 @@
   <a href="https://isitmaintained.com/project/Knawat/knawat-suppliers-npm">
     <img src="https://isitmaintained.com/badge/open/Knawat/knawat-suppliers-npm.svg" alt="Percentage of issues still open"/>
   </a>
-  <a href="https://npm-stat.com/charts.html?package=@knawat/knawat-suppliers-npm">
-    <img src="https://img.shields.io/npm/dm/@knawat/knawat-suppliers-npm.svg" alt="npm"/>
+  <a href="https://npm-stat.com/charts.html?package=@knawat/suppliers">
+    <img src="https://img.shields.io/npm/dm/@knawat/suppliers.svg" alt="npm"/>
   </a>
-  <a href="https://www.npmjs.com/package/@knawat/knawat-suppliers-npm">
-    <img src="https://img.shields.io/npm/v/@knawat/knawat-suppliers-npm.svg" alt="npm"/>
+  <a href="https://www.npmjs.com/package/@knawat/suppliers">
+    <img src="https://img.shields.io/npm/v/@knawat/suppliers.svg" alt="npm"/>
+  </a>
+  <a href="https://www.codacy.com/manual/Knawat/knawat-suppliers-npm?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Knawat/knawat-suppliers-npm&amp;utm_campaign=Badge_Grade">
+    <img src="https://api.codacy.com/project/badge/Grade/08f6c384f3114941b6a882193cb0bb5c"/>
   </a>
 </p>
 
@@ -30,7 +33,7 @@ npm install --save @knawat/suppliers
 
 ## Getting started
 
-Check out the Knawat Suppliers REST API endpoints and data that can be manipulated in <https://knawat-suppliers.restlet.io/>.
+Check out the Knawat Suppliers REST API endpoints and data that can be manipulated in [this link](https://docs.knawat.io/?url=https://dev.suppliers.knawat.io/openapi/openapi.json).
 
 ## Setup
 
@@ -192,10 +195,12 @@ sa.getCategories();
 sa.getOrders(limit, page);
 ```
 
-| Params  | Type     | Description                                  |
-| ------- | -------- | -------------------------------------------- |
-| `limit` | `Number` | Number of orders to retrieve. `Default: 1`   |
-| `page`  | `Number` | Number of the page to retrieve. `Default: 1` |
+| Params               | Type     | Description                                                  |
+| -------------------- | -------- | ------------------------------------------------------------ |
+| `limit`              | `Number` | Number of orders to retrieve. `Default: 20`                  |
+| `page`               | `Number` | Number of the page to retrieve. `Default: 1`                 |
+| `status`             | `String` | Status of order. `open/issued/cancelled/billed/closed/token` |
+| `purchaseorderNumber`| `String` | String of purchase order number.                             |
 
 <small>https://knawat-suppliers.restlet.io/#operation_get_order_s_</small>
 

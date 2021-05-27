@@ -1,84 +1,17 @@
-import querystring from 'querystring';
-import request from './request';
+import Request from './request';
 
 /**
  * A Class Library for handling Knawat MarketPlace related Operations.
  *
  * @class Products
  */
-class Products extends request {
+class Products extends Request {
   /**
    * Creates an instance of Products.
-   *
-   * @param {object} activeInstance
-   * @memberof Products
+   * @param {...(key, secret) || token, apiRateLimit: { bucketSize, interval, limit } }
    */
-  constructor({ key, secret, token }) {
-    super();
-    this.authentication = 'Bearer';
-    if ((!key || !secret) && !token) {
-      throw new Error('Not a valid consumerKey and consumerSecret or token');
-    }
-
-    this.consumerKey = key;
-    this.consumerSecret = secret;
-    this.token = token;
-  }
-
-  /**
-   * Generate access token from store key and secret
-   *
-   * @readonly
-   * @memberof Products
-   */
-  get token() {
-    if (!this.myToken) {
-      return this.getToken();
-    }
-
-    return this.myToken;
-  }
-
-  set token(val) {
-    if (!val) {
-      val = this.token;
-    }
-    this.myToken = val;
-  }
-
-  /**
-   * Generates a new access token
-   *
-   * @returns
-   * @memberof Products
-   */
-  getToken() {
-    this.authentication = false;
-    return this.$fetch('POST', '/token', {
-      body: JSON.stringify({
-        key: this.consumerKey,
-        secret: this.consumerSecret,
-      }),
-    }).then(({ user }) => {
-      this.token = user.token;
-      return user.token;
-    });
-  }
-
-  /**
-   * Update supplier
-   *
-   *  @param {object}  {"supplier": { "name" : "john", "url": "https://example.com.tr","logo": "https://example.com.tr/logo.png","currency": "TRY", "address": [array of addresses], "contacts": [array of contacts] } }
-   * @returns
-   * @see https://knawat-suppliers.restlet.io/#operation_update_a_supplier_2
-   * @memberof Products
-   */
-  updateSupplier(supplier) {
-    return this.$fetch('PUT', `/suppliers`, {
-      body: JSON.stringify({
-        supplier,
-      }),
-    });
+  constructor(...args) {
+    super('Bearer', ...args);
   }
 
   /**
@@ -100,33 +33,8 @@ class Products extends request {
    * @see https://knawat-suppliers.restlet.io/#operation_get_list_of_products
    * @memberof Products
    */
-  getProducts({
-    limit = 10,
-    page = 1,
-    qualified = null,
-    category_id = null,
-    keyword = null,
-    stock = null,
-    price = null,
-    sort_by = null,
-    sort_asc = null,
-    language = 'tr',
-  } = {}) {
-    // Generate url query paramaters
-    let queryParams = {
-      limit,
-      page,
-      qualified,
-      category_id,
-      keyword,
-      stock,
-      price,
-      sort_by,
-      sort_asc,
-      language,
-    };
-    Object.entries(queryParams).forEach(o => (o[1] === null ? delete queryParams[o[0]] : 0));
-    return this.$fetch('GET', `/catalog/products`, queryParams);
+  getProducts(queryParams = {}) {
+    return this.$fetch('GET', '/catalog/products', { queryParams });
   }
 
   /**
@@ -170,6 +78,17 @@ class Products extends request {
       body: JSON.stringify({ product }),
     });
   }
+  /**
+   * Update product external IDs by SKU
+   *
+   * @param {*} sku
+   * @returns
+   * @see https://knawat-suppliers.restlet.io/#operation_update_product
+   * @memberof Products
+   */
+  deleteProductBySku(sku) {
+    return this.$fetch('DELETE', `/catalog/products/${sku}`);
+  }
 
   /**
    * Bulk product update
@@ -180,7 +99,7 @@ class Products extends request {
    * @memberof Products
    */
   updateBulkProduct(products) {
-    return this.$fetch('PUT', `/catalog/products`, {
+    return this.$fetch('PUT', '/catalog/products', {
       body: JSON.stringify({
         products,
       }),
@@ -203,21 +122,36 @@ class Products extends request {
     if (level && level > 0) {
       queryParams.level = level;
     }
-    return this.$fetch('GET', `/catalog/categories`, queryParams);
+    return this.$fetch('GET', '/catalog/categories', { queryParams });
   }
 
   /**
    *  Get all current orders
    *
-   * @param {number} [limit=25]
-   * @param {number} [page=1]
+   * @param {object} {
+   *     limit = 20
+   *     page = 1,
+   *     status = open/issued/cancelled/billed/closed/token,
+   *     purchaseorderNumber = PO-xxxx1,
+   *   }
    * @returns
    * @see https://knawat-suppliers.restlet.io/#operation_get_order_s_
    * @memberof Products
    */
-  getOrders(limit = 25, page = 1) {
-    const params = querystring.stringify({ limit, page });
-    return this.$fetch('GET', `/orders?${params}`);
+  getOrders({
+    limit = 20,
+    page = 1,
+    status = null,
+    purchaseorderNumber = null,
+  }) {
+    // Generate url query paramaters
+    const queryParams = {
+      limit,
+      page,
+      status,
+      purchaseorderNumber,
+    };
+    return this.$fetch('GET', '/orders', { queryParams });
   }
 
   /**
