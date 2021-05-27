@@ -241,21 +241,7 @@ class Products extends request {
    * @memberof Products
    */
   cancelOrder(id) {
-    return this.$fetch('DELETE', `/orders/${id}`);
-  }
-
-  /**
-   * Create new order
-   *
-   * @param {array} data
-   * @returns
-   * @see https://knawat-suppliers.restlet.io/#operation_create_order
-   * @memberof Products
-   */
-  createOrder(data) {
-    return this.$fetch('POST', '/orders', {
-      body: JSON.stringify(data),
-    });
+    return this.$fetch('PATCH', `/orders/${id}/cancel`);
   }
 
   /**
@@ -269,6 +255,20 @@ class Products extends request {
    */
   updateOrder(orderId, data) {
     return this.$fetch('PUT', `/orders/${orderId}`, {
+      body: JSON.stringify(data),
+    });
+  }
+
+  /**
+   * Add comment on order
+   *
+   * @param {string} orderId
+   * @param {array} data
+   * @returns
+   * @memberof Products
+   */
+  addOrderComment(orderId, data) {
+    return this.$fetch('POST', `/orders/${orderId}/comments`, {
       body: JSON.stringify(data),
     });
   }
