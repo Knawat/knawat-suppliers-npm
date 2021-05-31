@@ -1,6 +1,6 @@
 {
   "name": "@knawat/suppliers",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "A Node.js package for the Knawat Dropshipping Suppliers REST API",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.js",
