@@ -155,7 +155,13 @@ class Request {
       },
     };
     return fetch(url, fetchOptions)
-      .then(res => res.json())
+      .then(async res => {
+        const body = await res.json();
+        if (!res.ok) {
+          throw body;
+        }
+        return body;
+      })
       .catch(error => {
         throw error;
       });
