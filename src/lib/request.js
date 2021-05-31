@@ -22,9 +22,11 @@ class Request {
   headers = config.HEADERS;
 
   constructor(authType, credentials) {
-    this.authentication = authType;
+    this.authentication = credentials && credentials.auth
+      ? credentials.auth
+      : authType; // check for Bearer credentials
     // check for Bearer credentials
-    if (authType === 'Bearer') {
+    if (this.authentication === 'Bearer' || this.authentication === 'BearerFulfillment') {
       if (
         !credentials ||
         ((!credentials.key || !credentials.secret) && !credentials.token)
@@ -43,7 +45,7 @@ class Request {
     }
 
     // check for Basic credentials
-    if (authType === 'Basic') {
+    if (this.authentication === 'Basic') {
       if (
         (!config.BASIC_USER || !config.BASIC_PASS) &&
         (!credentials.user || !credentials.pass)

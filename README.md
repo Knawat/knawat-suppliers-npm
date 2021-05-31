@@ -216,30 +216,37 @@ sa.getOrderById(order_id);
 
 <small>https://knawat-suppliers.restlet.io/#operation_order_by_id</small>
 
-### createOrder (Create Order)
-
-```javascript
-sa.createOrder(order_data);
-```
-
-| Params       | Type     | Description                          |
-| ------------ | -------- | ------------------------------------ |
-| `order_data` | `object` | Array of Order Data for create order |
-
-<small>https://knawat-suppliers.restlet.io/#operation_create_order</small>
-
 ### updateOrder (Update Order)
 
 ```javascript
+const order_data = {
+    shipmentTrackingNumber: "EJGGH000091",
+    shipVia: "DFL"
+}
 sa.updateOrder(order_id, order_data);
 ```
 
 | Params       | Type     | Description                                  |
 | ------------ | -------- | -------------------------------------------- |
 | `order_id`   | `string` | Knawat Order ID                              |
-| `order_data` | `object` | Array of Updated Order Data for create order |
+| `order_data` | `object` | Array of Updated Order Data |
 
 <small>https://knawat-suppliers.restlet.io/#operation_update_order</small>
+
+### Add order comment
+
+```javascript
+const order_data = {
+          description: 'shipment on the way',
+          expectedDeliveryDate: "2021-05-20",
+        }
+sa.addOrderComment(order_id, order_data);
+```
+
+| Params       | Type     | Description                                  |
+| ------------ | -------- | -------------------------------------------- |
+| `order_id`   | `string` | Knawat Order ID                              |
+| `order_data` | `object` | Array of Updated Order Data |
 
 ## Suppliers Methods
 
