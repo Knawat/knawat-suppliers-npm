@@ -12,33 +12,27 @@ export class Products {
   constructor(
     args: { key: string; secret: string } | { token: string } & RateLimit
   );
-  getProducts(): { products: SPProduct[]; errors: ResMessage[] };
+  getProducts(): { products: SPProduct[] };
   addProducts(
     products: SPProduct[]
   ): Promise<{
     count: number;
     products: SPProduct[];
     warning: string;
-    errors: ResMessage[];
   }>;
 
   // Unthrottled Fetch
-  _fetch<T>(...args: any): Promise<T | { errors: ResMessage[] }>;
-  $fetch<T>(...args: any): Promise<T | { errors: ResMessage[] }>;
+  _fetch<T>(...args: any): Promise<T>;
+  $fetch<T>(...args: any): Promise<T>;
   updateBulkProduct(
     products: Partial<SPProduct>[]
   ): Promise<{
     requestCount: number;
     updatedCount: number;
-    errors: ResMessage[];
   }>;
 
   updateProductBySku(
     sku: string,
     product: Partial<SPProduct>
-  ): Promise<{ product: SPProduct; errors: ResMessage[] }>;
-}
-
-interface ResMessage {
-  message: string;
+  ): Promise<{ product: SPProduct }>;
 }
