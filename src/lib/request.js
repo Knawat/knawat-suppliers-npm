@@ -70,7 +70,7 @@ class Request {
     }
     if (auth === 'BearerFulfillment') {
       const fulfillmentToken = await this.getTokenAuth('fulfillment');
-      this.headers.authorization = `Bearer ${fulfillmentToken}`;
+      this.headers.authorization = `BearerFulfillment ${fulfillmentToken}`;
       return;
     }
     if (!auth || auth === 'none') {
